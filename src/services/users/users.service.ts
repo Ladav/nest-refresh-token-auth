@@ -7,10 +7,7 @@ export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
   create(user: Pick<User, 'email' | 'password'>) {
-    return this.prisma.user.create({
-      data: user,
-      select: { email: true, id: true },
-    })
+    return this.prisma.user.create({ data: user, select: { email: true, id: true } })
   }
 
   async remove(id: number) {
@@ -18,7 +15,7 @@ export class UsersService {
   }
 
   get(id: number) {
-    return this.prisma.user.findUnique({ where: { id } })
+    return this.prisma.user.findUnique({ where: { id }, select: { email: true, id: true } })
   }
 
   update(id: number, updates: Partial<Pick<User, 'email' | 'password'>>) {
